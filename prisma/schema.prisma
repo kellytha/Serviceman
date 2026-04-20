@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ARTISAN
+  ADMIN
+}
+enum JobStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  passwordHash      String
+  firstName         String?
+  lastName          String?
+  phoneNumber       String?
+  role              Role      @default(CUSTOMER)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  artisanProfile    Artisan?
+  jobAsCustomer     Job[]     @relation("CustomerJobs")
+}
+
+model Artisan {
+  id                String      @id @default(cuid())
+  bio               String?    
+  category          String
+  portfolioUrl      String?
+  isVerified        Boolean     @default(false)
+
+
+  userId            String      @unique
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jobs              Job[]
+}
+
+model Job {
+  id                String      @id @default(cuid())
+  description       String
+  status            JobStatus   @default(PENDING)
+  price             Float
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+
+  customerId        String
+  customer          User        @relation("CustomerJobs", fields: [customerId], references: [id])
+
+  artisanId         String
+  artisan           Artisan     @relation(fields: [artisanId], references: [id])
+
+  review            Review?
+  payment           Payment?       
+}
+
+model Review {
+  id                String      @id @default(cuid())
+  rating            Int         
+  comment           String?
+  createdAt         DateTime    @default(now())
+
+  jobId             String      @unique
+  job               Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model Payment{
+  id                String      @id @default(cuid())
+  amount            Float
+  status            String
+  paystackPaymentId String?     @unique
+  createdAt         DateTime    @default(now())
+
+  jobId             String      @unique
+  job               Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
