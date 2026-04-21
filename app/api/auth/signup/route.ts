@@ -23,7 +23,7 @@ export async function POST(request: Request) {
             const user = await tx.user.create({
                 data: {
                     email,
-                    password: hashedPassword,
+                    passwordHash: hashedPassword,
                     firstName,
                     lastName,
                     phoneNumber,
