@@ -1,13 +1,4 @@
-const services = [
-  { name: "Plumbing", count: 120, icon: "/assets/plumbing.png" },
-  { name: "Electrical", count: 100, icon: "/assets/Lightning.png" },
-  { name: "Carpentry", count: 80, icon: "/assets/Hammer.png" },
-  { name: "Painting", count: 150, icon: "/assets/PaintRoller.png" },
-  { name: "General Repair", count: 140, icon: "/assets/Wrench.png" },
-  { name: "House Cleaning", count: 150, icon: "/assets/SprayBottle.png" },
-  { name: "Moving", count: 123, icon: "/assets/Van.png" },
-  { name: "Tailoring", count: 110, icon: "/assets/Needle.png" },
-];
+import { services } from "@/lib/data";
 
 export default function ServicesGrid() {
   return (

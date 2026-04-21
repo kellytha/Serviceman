@@ -1,26 +1,4 @@
-const testimonials = [
-  {
-    name: "Mariam",
-    role: "Client",
-    text: "I like that I could compare different artisans before choosing. It gave me confidence I was making the right decision",
-    initials: "M",
-    bg: "bg-gray-400",
-  },
-  {
-    name: "Mariam",
-    role: "Client",
-    text: "The electrician I hired was professional and showed up on time. I'll definitely use Serviceman again.",
-    initials: "M",
-    bg: "bg-gray-700",
-  },
-  {
-    name: "Kendrick",
-    role: "Artisan",
-    text: "The platform helps me showcase my work and build trust with new clients.",
-    initials: "K",
-    bg: "bg-green-600",
-  },
-];
+import { testimonials } from "@/lib/data";
 
 export default function Testimonials() {
   return (

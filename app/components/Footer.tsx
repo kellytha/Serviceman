@@ -1,4 +1,4 @@
-const socialLinks = ["Facebook", "Instagram", "TikTok", "Twitter", "LinkedIn"];
+import { socialLinks } from "@/lib/data";
 
 export default function Footer() {
   return (
