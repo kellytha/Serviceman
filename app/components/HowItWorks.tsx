@@ -1,33 +1,51 @@
 import { steps } from "@/lib/data";
 
-const icons = [
-  <svg key="connected" className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-  </svg>,
-  <svg key="engage" className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-  </svg>,
-  <svg key="results" className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>,
-];
+const stepIcons = [
+  "/assets/connector.png",
+  "/assets/CalendarCheck.png",
+  "/assets/CheckCircle.png",
+] as const;
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">How It Works</h2>
-        <p className="text-gray-500 mb-12">Three simple steps to start your journey on Serviceman</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {steps.map((step, i) => (
-            <div key={step.title} className="bg-gray-50 rounded-xl p-8 flex flex-col items-center text-center gap-4">
-              <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center">
-                {icons[i]}
+    <section id="how-it-works" className="relative isolate">
+      <img
+        src="/how-it-works.png"
+        alt=""
+        className="block h-auto w-full max-w-none"
+        decoding="async"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-slate-900/20" aria-hidden />
+      <div className="absolute inset-0 z-10 flex flex-col">
+        <header className="shrink-0 px-6 pt-12 text-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:pt-16">
+          <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl">How It Works</h2>
+          <p className="mx-auto max-w-2xl text-base text-white md:text-lg">
+            Three simple steps to start your journey on Serviceman
+          </p>
+        </header>
+        <div className="flex flex-1 items-center px-6 pb-12 md:pb-16">
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="max-w-xl">
+              <div className="space-y-10 rounded-2xl bg-white p-10 shadow-[0_2px_20px_rgba(15,23,42,0.08)] md:rounded-3xl">
+                {steps.map((step, i) => (
+                  <div key={step.title} className="flex items-center gap-5">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#f0f2f5]">
+                      <img
+                        src={stepIcons[i]}
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 object-contain"
+                      />
+                    </div>
+                    <p className="text-[15px] font-normal leading-relaxed text-gray-900 md:text-base">
+                      {step.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
-              <p className="text-gray-500 text-sm">{step.desc}</p>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

@@ -13,9 +13,9 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <HowItWorks />
+      <ServicesGrid />
       <ArtisanCTA />
       <Testimonials />
-      <ServicesGrid />
       <SkilledArtisanCTA />
       <Footer />
     </div>

@@ -48,4 +48,10 @@ export const steps = [
   },
 ];
 
-export const socialLinks = ["Facebook", "Instagram", "TikTok", "Twitter", "LinkedIn"];
+export const socialLinks: { name: string; href: string }[] = [
+  { name: "Facebook", href: "#" },
+  { name: "Instagram", href: "#" },
+  { name: "TikTok", href: "#" },
+  { name: "X", href: "#" },
+  { name: "LinkedIn", href: "#" },
+];
