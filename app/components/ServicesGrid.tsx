@@ -1,4 +1,6 @@
 import { services } from "@/lib/data";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function ServicesGrid() {
   return (
@@ -10,15 +12,15 @@ export default function ServicesGrid() {
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {services.map((s) => (
-            <a
+            <Link
               key={s.name}
               href={`/services/${s.name.toLowerCase().replace(" ", "-")}`}
               className="border border-gray-200 rounded-xl p-5 flex flex-col items-center gap-2 hover:border-blue-400 hover:bg-blue-50 transition-colors text-center"
             >
-              <img src={s.icon} alt={s.name} className="w-8 h-8 object-contain" />
+              <Image src={s.icon} alt={s.name} width={32} height={32} className="w-8 h-8 object-contain" />
               <p className="font-medium text-gray-900 text-sm">{s.name}</p>
               <p className="text-gray-400 text-xs">{s.count} Artisans</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
