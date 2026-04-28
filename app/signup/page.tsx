@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useMemo, useRef, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 
 type SignupStep = "signup" | "otp" | "verified";
 
@@ -137,15 +138,13 @@ export default function SignupPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <Image src="/painter.png" alt="Artisan working in workshop" fill priority className="object-cover" />
+      <Image src="/artisan-image.png" alt="Artisan working in workshop" fill priority className="object-cover" />
       <div className="absolute inset-0 bg-black/25" />
 
       <section className="relative z-10 flex min-h-screen items-center px-6 py-10 md:px-12">
         <div className="w-full max-w-xl rounded-3xl bg-[#f3f4f8] px-8 py-10 shadow-2xl md:px-10">
-          <div className="mb-10 flex items-center gap-2 font-semibold text-gray-900">
-            <span role="img" aria-label="Serviceman logo">
-              🛠️
-            </span>
+          <div className="mb-10 flex items-center gap-3 font-semibold text-gray-900">
+            <Image src="/Logo.png" alt="Serviceman logo" width={36} height={36} className="h-9 w-auto" priority />
             <span className="text-2xl">Serviceman</span>
           </div>
 
@@ -221,9 +220,7 @@ export default function SignupPage() {
                 type="button"
                 className="flex w-full items-center justify-center gap-2 rounded-md border border-blue-200 bg-transparent px-4 py-2.5 text-sm text-gray-700 transition hover:bg-blue-50"
               >
-                <span className="text-base" aria-hidden>
-                  🌐
-                </span>
+                <FcGoogle className="h-5 w-5" aria-hidden />
                 Sign up with Google
               </button>
 
