@@ -10,15 +10,20 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="relative isolate">
       <img
-        src="/how-it-works.png"
+        src="/bg-hero-main.png"
         alt=""
         className="block h-auto w-full max-w-none"
         decoding="async"
       />
-      <div className="pointer-events-none absolute inset-0 bg-slate-900/20" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-slate-900/20"
+        aria-hidden
+      />
       <div className="absolute inset-0 z-10 flex flex-col">
         <header className="shrink-0 px-6 pt-12 text-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:pt-16">
-          <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl">How It Works</h2>
+          <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl">
+            How It Works
+          </h2>
           <p className="mx-auto max-w-2xl text-base text-white md:text-lg">
             Three simple steps to start your journey on Serviceman
           </p>
