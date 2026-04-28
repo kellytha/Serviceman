@@ -2,6 +2,7 @@ import type { IconType } from "react-icons";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { socialLinks } from "@/lib/data";
+import Image from "next/image";
 
 const socialIcon: Record<string, IconType> = {
   Facebook: FaFacebook,
@@ -16,10 +17,13 @@ export default function Footer() {
     <footer className="bg-gray-900 py-10 text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 text-center">
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src="/Logo.png"
             alt="Serviceman logo"
+            width={36}
+            height={36}
             className="h-9 w-auto brightness-200"
+            priority
           />
           <span className="text-lg font-semibold text-white">Serviceman</span>
         </div>
