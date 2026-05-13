@@ -18,22 +18,18 @@ Creates a new user account (customer or artisan).
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `email` | string | Yes | User's email address (unique) |
+| `phoneNumber` | string | Yes | User's phone number (Nigerian format, unique) |
 | `password` | string | Yes | User's password (min 6 characters) |
-| `firstName` | string | No | User's first name |
-| `lastName` | string | No | User's last name |
-| `phoneNumber` | string | No | User's phone number |
+| `fullName` | string | Yes | User's full name |
 | `role` | enum | Yes | `CUSTOMER`, `ARTISAN`, or `ADMIN` |
 | `category` | string | No | Artisan's trade category (required if `role` is `ARTISAN`) |
 
 **Request Example:**
 ```json
 {
-  "email": "john@example.com",
+  "phoneNumber": "08012345678",
   "password": "securepassword123",
-  "firstName": "John",
-  "lastName": "Doe",
-  "phoneNumber": "+1234567890",
+  "fullName": "John Doe",
   "role": "CUSTOMER"
 }
 ```
@@ -43,15 +39,21 @@ Creates a new user account (customer or artisan).
 {
   "message": "User created successfully",
   "user": {
-    "email": "john@example.com",
+    "phoneNumber": "08012345678",
     "role": "CUSTOMER"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIs..."
+  }
 }
 ```
 
+**Cookie:** A `serviceman_session` cookie is set with the following properties:
+- `httpOnly: true`
+- `secure: true` (production only)
+- `sameSite: "lax"`
+- `maxAge: 24 hours`
+
 **Errors:**
-- `400` — Missing required fields or email already in use
+- `400` — Missing required fields or phone number already in use
+- `400` — Invalid Nigerian phone number format
 - `500` — Internal server error
 
 ---
@@ -64,13 +66,13 @@ Authenticates a user and returns a JWT token.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `email` | string | Yes | User's email address |
+| `phoneNumber` | string | Yes | User's phone number |
 | `password` | string | Yes | User's password |
 
 **Request Example:**
 ```json
 {
-  "email": "john@example.com",
+  "phoneNumber": "08012345678",
   "password": "securepassword123"
 }
 ```
@@ -81,22 +83,80 @@ Authenticates a user and returns a JWT token.
   "message": "Login successful",
   "user": {
     "id": "cuid123...",
-    "email": "john@example.com",
+    "phoneNumber": "08012345678",
     "role": "CUSTOMER",
-    "firstName": "John"
+    "fullName": "John Doe"
   }
 }
 ```
 
-**Cookie:** A `token` cookie is set with the following properties:
+**Cookie:** A `serviceman_session` cookie is set with the following properties:
 - `httpOnly: true`
 - `secure: true` (production only)
 - `sameSite: "lax"`
 - `maxAge: 24 hours`
 
 **Errors:**
-- `400` — Email and password are required
+- `400` — Phone number and password are required
 - `401` — Invalid credentials
+- `500` — Internal server error
+
+---
+
+### 3. User Logout
+
+**Endpoint:** `POST /api/auth/logout`
+
+Clears the authentication cookie and logs out the user.
+
+**Response (200 OK):**
+```json
+{
+  "message": "Logout successful"
+}
+```
+
+**Cookie:** The `serviceman_session` cookie is cleared.
+
+---
+
+### 4. NIN Verification (Artisans Only)
+
+**Endpoint:** `POST /api/artisan/verify-nin`
+
+Verifies an artisan's identity using their National Identification Number.
+
+**Authentication:** Required (JWT token in `serviceman_session` cookie)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `nin` | string | Yes | 11-digit National Identification Number |
+
+**Request Example:**
+```json
+{
+  "nin": "12345678901"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "message": "NIN verified successfully",
+  "user": {
+    "id": "cuid123...",
+    "phoneNumber": "08012345678",
+    "fullName": "John Doe",
+    "role": "ARTISAN",
+    "isVerified": true
+  }
+}
+```
+
+**Errors:**
+- `401` — Unauthorized (invalid or missing JWT)
+- `403` — Only artisans can verify NIN
+- `400` — Invalid NIN format or NIN already in use
 - `500` — Internal server error
 
 ---

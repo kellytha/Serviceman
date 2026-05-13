@@ -378,10 +378,6 @@ export type ArtisanUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ArtisanUpdateToOneWithWhereWithoutUserInput, Prisma.ArtisanUpdateWithoutUserInput>, Prisma.ArtisanUncheckedUpdateWithoutUserInput>
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ArtisanCreateNestedOneWithoutJobsInput = {
   create?: Prisma.XOR<Prisma.ArtisanCreateWithoutJobsInput, Prisma.ArtisanUncheckedCreateWithoutJobsInput>
   connectOrCreate?: Prisma.ArtisanCreateOrConnectWithoutJobsInput
