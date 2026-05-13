@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
     const token = await new SignJWT({
       userId: user.id,
       phoneNumber: user.phoneNumber,
@@ -55,12 +55,13 @@ export async function POST(request: Request) {
           id: user.id,
           phoneNumber: user.phoneNumber,
           role: user.role,
-          fullName: user.fullName,
+          firstName: user.firstName,
+          lastName: user.lastName,
         },
       }
     );
 
-    response.cookies.set("serviceman_session", token, {
+    response.cookies.set("auth-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -71,8 +72,13 @@ export async function POST(request: Request) {
     return response;
   } catch (error: any) {
     console.error("LOGIN_ERROR:", error);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { 
+        error: "Internal Server Error",
+        details: error.message 
+      },
       { status: 500 }
     );
   }

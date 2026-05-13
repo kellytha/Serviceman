@@ -29,7 +29,8 @@ model User {
   id                String    @id @default(cuid())
   phoneNumber       String    @unique
   password          String
-  fullName          String
+  firstName         String
+  lastName          String
   role              Role      @default(CUSTOMER)
   nin               String?   @unique
   isVerified        Boolean   @default(false)

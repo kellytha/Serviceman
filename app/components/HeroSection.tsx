@@ -17,7 +17,7 @@ export default function HeroSection() {
               Find An Artisan
             </a>
             <a
-              href="/become-artisan"
+              href="/signup"
               className="border border-gray-400 text-gray-700 hover:bg-gray-200 font-medium px-6 py-2.5 rounded-md transition-colors"
             >
               Become Our Artisan

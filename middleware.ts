@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
 
   // Apply middleware to protected routes and API routes (except auth)
   if (isProtectedRoute || pathname.startsWith('/api/')) {
-    const token = request.cookies.get('serviceman_session')?.value;
+    const token = request.cookies.get('auth-token')?.value;
 
     if (!token) {
       // For API routes, return JSON error
@@ -28,8 +28,19 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
       const { payload } = await jwtVerify(token, secret);
+
+      // Role-based redirection for dashboard
+      if (pathname === '/dashboard') {
+        const userRole = payload.role as string;
+        if (userRole === 'ARTISAN') {
+          return NextResponse.redirect(new URL('/dashboard/artisan', request.url));
+        } else {
+          return NextResponse.redirect(new URL('/dashboard/customer', request.url));
+        }
+      }
+
       // Token is valid, proceed
     } catch (error) {
       // For API routes, return JSON error

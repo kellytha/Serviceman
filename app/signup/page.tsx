@@ -12,7 +12,8 @@ import { AiFillApple } from "react-icons/ai";
 type Role = "CUSTOMER" | "ARTISAN";
 
 export default function SignupPage() {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,8 +35,8 @@ export default function SignupPage() {
     event.preventDefault();
     setErrorMessage("");
 
-    if (!fullName.trim()) {
-      setErrorMessage("Full name is required.");
+    if (!firstName.trim() || !lastName.trim()) {
+      setErrorMessage("First name and last name are required.");
       return;
     }
 
@@ -77,7 +78,8 @@ export default function SignupPage() {
         body: JSON.stringify({
           phoneNumber: phoneNumber.replace(/[\s\-\(\)]/g, ""),
           password,
-          fullName: fullName.trim(),
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
           role,
           category: role === "ARTISAN" ? category.trim() : undefined,
         }),
@@ -119,16 +121,29 @@ export default function SignupPage() {
         <form className="space-y-6" onSubmit={onSubmitSignup}>
           <div className="grid gap-4 lg:grid-cols-2">
             <label className="block">
-              <span className="text-sm font-medium text-slate-700">Full Name</span>
+              <span className="text-sm font-medium text-slate-700">First Name</span>
               <input
                 type="text"
-                value={fullName}
-                onChange={(event) => setFullName(event.target.value)}
-                placeholder="Enter your name"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                placeholder="Enter your first name"
                 className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                 required
               />
             </label>
+            <label className="block">
+              <span className="text-sm font-medium text-slate-700">Last Name</span>
+              <input
+                type="text"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                placeholder="Enter your last name"
+                className="mt-2 block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                required
+              />
+            </label>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
             <label className="block">
               <span className="text-sm font-medium text-slate-700">Phone Number</span>
               <input

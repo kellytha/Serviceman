@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
       user: {
         id: updatedUser.id,
         phoneNumber: updatedUser.phoneNumber,
-        fullName: updatedUser.fullName,
+        fullName: updatedUser.firstName,
         role: updatedUser.role,
         isVerified: updatedUser.isVerified
       }

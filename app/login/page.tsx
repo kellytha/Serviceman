@@ -69,7 +69,7 @@ export default function LoginPage() {
           </div>
           <div>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-              Welcome back Ogooluwa! 👋
+              Welcome back 👋
             </h1>
             <p className="mt-3 text-base text-slate-600">
               Enter your details to log in to your account.

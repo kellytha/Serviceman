@@ -15,9 +15,9 @@ function validateNigerianPhone(phoneNumber: string): boolean {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { phoneNumber, password, fullName, role, category } = body;
+    const { phoneNumber, password, firstName, lastName, role, category } = body;
 
-    if (!phoneNumber || !password || !fullName || !role) {
+    if (!phoneNumber || !password || !firstName || !lastName || !role) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
@@ -37,7 +37,8 @@ export async function POST(request: Request) {
         data: {
           phoneNumber,
           password: hashedPassword,
-          fullName,
+          firstName,
+          lastName,
           role,
           artisanProfile: role === "ARTISAN" ? {
             create: {
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
       return user;
     });
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
     const token = await new SignJWT({
       userId: newUser.id,
       phoneNumber: newUser.phoneNumber,
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
       { status: 201 }
     );
 
-    response.cookies.set("serviceman_session", token, {
+    response.cookies.set("auth-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -76,6 +77,11 @@ export async function POST(request: Request) {
     return response;
   } catch (error: any) {
     console.error("SIGNUP_ERROR:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
+    return NextResponse.json({ 
+      error: "Internal Server Error",
+      details: error.message 
+    }, { status: 500 });
   }
 }
