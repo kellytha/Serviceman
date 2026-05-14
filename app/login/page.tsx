@@ -51,7 +51,7 @@ export default function LoginPage() {
       }
 
       // Redirect to dashboard or appropriate page
-      router.push("/dashboard");
+      
     } catch (error) {
       setErrorMessage("Network error. Please check your connection and try again.");
     } finally {
